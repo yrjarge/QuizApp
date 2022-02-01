@@ -24,8 +24,7 @@ export default function CustomButton({
           textcolor ? { color: textcolor } : {},
         ]}
       >
-        {" "}
-        {text}{" "}
+        {text}
       </Text>
     </Pressable>
   );
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3B71F3",
   },
   container_link: {
-    backgroundColor: "gray",
+    backgroundColor: "white",
   },
   text: {
     color: "white",

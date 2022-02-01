@@ -5,8 +5,9 @@
  * @format
  * @flow strict-local
  */
-import React, { Component } from "react";
-import { StyleSheet, View, Text, Button, LogBox } from "react-native";
+import React, { useState, useEffect, Component } from "react";
+import type { Node } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 //Screens
@@ -23,10 +24,11 @@ import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import QuestionState from "./src/context/Questions/QuestionState";
 import SessionState from "./src/context/SessionToken/SessionState";
 import ScoreState from "./src/context/Score/ScoreState";
-import { Header } from "react-native/Libraries/NewAppScreen";
 //firebase
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+//Components
+import Profile from "./src/screens/Profile";
 
 const style = StyleSheet.create({
   headerIcon: {
@@ -56,9 +58,9 @@ if (getApps().length === 0) {
 } else {
   app = getApp();
 }
-
 const auth = getAuth();
-const c_user = auth.currentUser; //Is null if not logged in
+const c_user = auth.currentUser;
+//Is null if not logged in
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +68,13 @@ export class App extends Component {
       loaded: false,
     };
   }
+  ProfileClicked = ({ navigation }) => {
+    if (c_user) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("Signup");
+    }
+  };
 
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
@@ -83,7 +92,6 @@ export class App extends Component {
 
   render() {
     const { loaded } = this.state;
-    LogBox.ignoreLogs(["Setting a timer", "AsyncStorage has been"]);
     //returns loading screen
     if (!loaded) {
       return (
@@ -128,6 +136,8 @@ export class App extends Component {
                     name="Reset Password"
                     component={ResetPasswordScreen}
                   />
+                  <Stack.Screen name="Profile" component={Profile} />
+
                   <Stack.Screen
                     name="Congratz"
                     component={CongratzScreen}

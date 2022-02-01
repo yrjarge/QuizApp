@@ -36,7 +36,7 @@ const Answers = ({
                   ? val == correct
                     ? "#3eed4f"
                     : "#e64545"
-                  : "#228CDB",
+                  : "white",
               },
               pressed ? { opacity: 0.9 } : {},
               styles.optionBox,

@@ -1,11 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
 import { getDatabase, ref, child, get, set } from "firebase/database";
-import { Text, Button, View, StyleSheet, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 import ScoreContext from "../context/Score/scoreContext";
 import { getAuth } from "firebase/auth";
+import { Avatar } from "react-native-elements";
+
+import Button from "../components/Button";
 
 const wallpaper = require("../../assets/images/wallpaper.jpg");
-const knownlegde = require("../../assets/images/knownlegde.jpg");
+const knownlegde = require("../../assets/images/knownledge_edited.jpg");
 
 export default function CongratzScreen({ navigation }) {
   const scoreContext = useContext(ScoreContext);
@@ -13,6 +22,7 @@ export default function CongratzScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const { score, maxScore } = scoreContext;
   const db = getDatabase();
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
     if (auth.currentUser != null) {
@@ -20,8 +30,31 @@ export default function CongratzScreen({ navigation }) {
     }
   }, []);
 
+  const ProfileClicked = () => {
+    if (currentUser) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("Login");
+    }
+  };
+  //
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={ProfileClicked}>
+          <Avatar
+            size={40}
+            rounded
+            icon={{ name: "person" }}
+            containerStyle={{ backgroundColor: "#00a7f7" }}
+          />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
+
   const updateScore = (userID) => {
-    if (userID) {
+    if (currentUser) {
       const dbRef = ref(db);
       get(child(dbRef, `user/${userID}`))
         .then((snapshot) => {
@@ -29,11 +62,16 @@ export default function CongratzScreen({ navigation }) {
             let tempUser = snapshot.val();
             setUsername(tempUser.name);
             let newscore = tempUser.total_score ? tempUser.total_score : 0;
+            let available = tempUser.available_score
+              ? tempUser.available_score
+              : 0;
             newscore += score;
+            available += maxScore;
             const userUpdate = {
               email: tempUser.email,
               name: tempUser.name,
               total_score: newscore,
+              available_score: available,
             };
             set(ref(db, "user/" + userID), userUpdate);
           }
@@ -64,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "800",
     margin: 30,
+    color: "white",
   },
   image: {
     height: "100%",
