@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
+import { getAuth } from "firebase/auth";
+import { Avatar } from "react-native-elements";
 
 import QuestionContext from "../context/Questions/questionContext";
 
@@ -12,12 +14,37 @@ export default function Quiz({ navigation }) {
   const { results } = questionContext;
   // state for indexing questionslist
   const [index, setIndex] = useState(0);
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
     if (index >= results.length) {
       setIndex(0);
     }
   }, [index]);
+
+  const ProfileClicked = () => {
+    if (currentUser) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("Signup");
+    }
+  };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={ProfileClicked}>
+          <Avatar
+            size={40}
+            rounded
+            icon={{ name: "person" }}
+            containerStyle={{ backgroundColor: "#00a7f7" }}
+          />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   if (index < results.length) {
     return (

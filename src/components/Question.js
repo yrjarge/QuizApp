@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   postHeader: {
     alignItems: "center",
     padding: 20,
+    margin: 20,
     marginBottom: 40,
   },
   options: {
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   textOption: {
-    color: "white",
+    color: "black",
     fontSize: 18,
   },
   textQuestion: {
-    color: "black",
+    color: "white",
     fontSize: 20,
   },
 });

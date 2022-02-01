@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Button,
-  ImageBackground,
-  Platform,
-} from "react-native";
+import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { getAuth } from "firebase/auth";
+import { Avatar } from "react-native-elements";
 
 import fetchQuestions from "../fetch/getQuestions";
 import fetchCategories from "../fetch/getCategories";
+import Button from "../components/Button";
 
 import QuestionContext from "../context/Questions/questionContext";
 import SessionContext from "../context/SessionToken/sessionContext";
@@ -56,6 +53,9 @@ export default function QuizForm({ navigation }) {
   const [categories_dict, setCategoriesDict] = useState();
   const [categories, setCategories] = useState();
 
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
   useEffect(() => {
     const getCategories = async () => {
       let categories_dict = await fetchCategories();
@@ -65,6 +65,29 @@ export default function QuizForm({ navigation }) {
     };
     getCategories();
   }, []);
+
+  const ProfileClicked = () => {
+    if (currentUser) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("Login");
+    }
+  };
+  //
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={ProfileClicked}>
+          <Avatar
+            size={40}
+            rounded
+            icon={{ name: "person" }}
+            containerStyle={{ backgroundColor: "#00a7f7" }}
+          />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   const list = ["5", "10", "15", "20", "25", "30"];
 
