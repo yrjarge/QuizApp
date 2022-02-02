@@ -41,9 +41,9 @@ export default function SignupScreen({ navigation }) {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
-        <Text style={styles.title}>Create an account</Text>
+    <View style={styles.root}>
+      <Text style={styles.title}>Create an account</Text>
+      <View style={styles.inputContainer}>
         <UsernameInput
           placeholder="Username"
           value={username}
@@ -68,14 +68,20 @@ export default function SignupScreen({ navigation }) {
           setValue={setPassword2}
           secureTextEntry={true}
         />
-        <CustomButton text="Register" onPress={onRegisterPressed} />
+      </View>
+      <View style={styles.questionContainer}>
+        <CustomButton
+          text="Register"
+          onPress={onRegisterPressed}
+          bgcolor={"#1e3b52"}
+        />
         <CustomButton
           text="Already have an Account? Sign in here!"
           onPress={onSignInPressed}
           type={"link"}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -83,6 +89,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 0,
     backgroundColor: "white",
+    height: "100%",
   },
   logo: {
     width: "70%",
@@ -92,5 +99,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     margin: 10,
+  },
+  questionContainer: {
+    marginTop: 25,
+    width: "70%",
+  },
+  inputContainer: {
+    alignItems: "center",
+    margin: 5,
   },
 });

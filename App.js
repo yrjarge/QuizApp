@@ -5,11 +5,11 @@
  * @format
  * @flow strict-local
  */
-import React, { useState, useEffect, Component } from "react";
-import type { Node } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { Avatar } from "react-native-elements";
 //Screens
 import HomeScreen from "./src/screens/HomeScreen";
 import QuizForm from "./src/screens/QuizForm";
@@ -20,6 +20,7 @@ import SignupScreen from "./src/screens/Signup";
 import SignupConfirmScreen from "./src/screens/SignupConfirm";
 import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
+import Profile from "./src/screens/Profile";
 //states
 import QuestionState from "./src/context/Questions/QuestionState";
 import SessionState from "./src/context/SessionToken/SessionState";
@@ -28,7 +29,7 @@ import ScoreState from "./src/context/Score/ScoreState";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 //Components
-import Profile from "./src/screens/Profile";
+import Button from "./src/components/Button";
 
 const style = StyleSheet.create({
   headerIcon: {
@@ -137,18 +138,23 @@ export class App extends Component {
                     component={ResetPasswordScreen}
                   />
                   <Stack.Screen name="Profile" component={Profile} />
-
                   <Stack.Screen
                     name="Congratz"
                     component={CongratzScreen}
                     options={({ navigation }) => ({
                       headerLeft: () => (
-                        <View style={{ marginRight: 15 }}>
-                          <Button
-                            title="Home"
-                            onPress={() => navigation.navigate("Home")}
+                        <Pressable onPress={() => navigation.navigate("Home")}>
+                          <Avatar
+                            size={40}
+                            rounded
+                            icon={{ name: "home" }}
+                            containerStyle={{
+                              backgroundColor: "#00c1d4",
+                              marginBottom: 5,
+                              marginRight: 25,
+                            }}
                           />
-                        </View>
+                        </Pressable>
                       ),
                     })}
                   />

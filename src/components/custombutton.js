@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3B71F3",
   },
   container_button: {
-    backgroundColor: "#3B71F3",
+    backgroundColor: "#1e3b52",
   },
   container_link: {
     backgroundColor: "white",

@@ -45,25 +45,32 @@ export default function Profile({ navigation }) {
       });
   }
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
+    <View style={styles.root}>
+      <View style={styles.logoContainer}>
         <Image
           source={quizlogo}
           resizeMode="contain"
           style={(styles.logo, { height: height * 0.3 })}
         />
-        <View style={styles.container}>
-          <Text style={styles.text}> Username: {name} </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.text}> Total score: {score} </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.text}> Correct Ratio: {score / max_score} </Text>
-        </View>
-        <CustomButton text="Sign Out" onPress={SignOut} />
       </View>
-    </ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.text}> Username: {name} </Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.text}> Total score: {score} </Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.text}>
+          Correct Ratio:{" "}
+          {score / max_score != NaN
+            ? Number(score / max_score).toFixed(2)
+            : "No history"}
+        </Text>
+      </View>
+      <View style={styles.button}>
+        <CustomButton text="Sign Out" onPress={SignOut} bgcolor={"#00c1d4"} />
+      </View>
+    </View>
   );
 }
 
@@ -72,20 +79,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 0,
     backgroundColor: "white",
+    height: "100%",
   },
   logo: {
     width: "70%",
   },
+  logoContainer: {
+    marginBottom: 15,
+  },
   container: {
-    width: "100%",
+    width: "70%",
     padding: 15,
     marginVertical: 5,
     alignItems: "center",
     borderRadius: 5,
-    backgroundColor: "#3B71F3",
+    backgroundColor: "#1e3b52",
   },
   text: {
     color: "white",
     fontWeight: "bold",
+  },
+  button: {
+    width: "70%",
   },
 });

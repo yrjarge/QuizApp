@@ -46,7 +46,9 @@ const Answers = ({
               feedback(val);
             }}
           >
-            <Text style={styles.textOption}>{he.decode(val)}</Text>
+            <Text style={styles.textOption} adjustsFontSizeToFit>
+              {he.decode(val)}
+            </Text>
           </Pressable>
         </View>
       ))}
