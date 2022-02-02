@@ -38,15 +38,19 @@ export default function LoginScreen({ navigation }) {
   const onForgotPasswordPressed = () => {
     navigation.navigate("Forgot Password");
   };
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
-        <Image
-          source={quizlogo}
-          resizeMode="contain"
-          style={(styles.logo, { height: height * 0.3 })}
-        />
 
+  const onSignupPressed = () => {
+    navigation.navigate("Signup");
+  };
+
+  return (
+    <View style={styles.root}>
+      <Image
+        source={quizlogo}
+        resizeMode="contain"
+        style={(styles.logo, { height: height * 0.3 })}
+      />
+      <View style={styles.inputContainer}>
         <UsernameInput
           placeholder="E-mail"
           value={mail}
@@ -59,7 +63,13 @@ export default function LoginScreen({ navigation }) {
           setValue={setPassword}
           secureTextEntry={true}
         />
-        <CustomButton text="Sign in" onPress={onSignInPressed} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <CustomButton
+          text="Sign in"
+          onPress={onSignInPressed}
+          bgcolor={"#1e3b52"}
+        />
         <CustomButton
           text="Forgot Password?"
           onPress={onForgotPasswordPressed}
@@ -71,24 +81,26 @@ export default function LoginScreen({ navigation }) {
           type={"link"}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
-
-const onSignInPressed = () => {
-  console.warn("sign in");
-};
-const onSignupPressed = () => {
-  console.warn("singup");
-};
 
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
     padding: 0,
     backgroundColor: "white",
+    height: "100%",
   },
   logo: {
     width: "70%",
+  },
+  buttonContainer: {
+    width: "70%",
+    marginTop: 25,
+  },
+  inputContainer: {
+    alignItems: "center",
+    margin: 5,
   },
 });

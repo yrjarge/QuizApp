@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   textQuestion: {
     color: "white",
     fontSize: 20,
+    textAlign: "center",
   },
 });
 

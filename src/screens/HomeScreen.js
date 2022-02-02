@@ -1,24 +1,36 @@
 import React, { useEffect, useContext, useState } from "react";
 import {
   Text,
-  Button,
   View,
   Pressable,
   StyleSheet,
   useWindowDimensions,
   Image,
 } from "react-native";
-import SessionContext from "../context/SessionToken/sessionContext";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { Avatar } from "react-native-elements";
+
+import SessionContext from "../context/SessionToken/sessionContext";
+import QuestionContext from "../context/Questions/questionContext";
+import ScoreContext from "../context/Score/scoreContext";
+
 import CustomButton from "../components/custombutton";
 import quizlogo from "../../assets/images/quizlogo.jpg";
+import fetchQuestions from "../fetch/getQuestions";
+import { firebase } from "@react-native-firebase/auth";
 
 export default function HomeScreen({ navigation }) {
   const [username, setUsername] = useState("");
+
   const sessionContext = useContext(SessionContext);
+  const questionContext = useContext(QuestionContext);
+  const scoreContext = useContext(ScoreContext);
+
   const { setToken } = sessionContext;
+  const { setQuestions } = questionContext;
+  const { resetScore } = scoreContext;
+
   const { height } = useWindowDimensions();
   const auth = getAuth();
   const db = getDatabase();
@@ -45,6 +57,18 @@ export default function HomeScreen({ navigation }) {
   const Login = () => {
     navigation.navigate("Login");
   };
+  const Quiz = async () => {
+    resetScore();
+    let quizData = {
+      amount: "default",
+      category: "default",
+      difficulty: "default",
+      type: "default",
+    };
+    const questions = await fetchQuestions(quizData);
+    setQuestions(questions);
+    navigation.navigate("Quiz");
+  };
   //
 
   useEffect(() => {
@@ -53,14 +77,17 @@ export default function HomeScreen({ navigation }) {
     };
     startSession();
   }, []);
-  if (!currentUser) {
-    const ProfileClicked = () => {
-      if (currentUser) {
+
+  const ProfileClicked = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         navigation.navigate("Profile");
       } else {
         navigation.navigate("Login");
       }
-    };
+    });
+  };
+  if (!currentUser) {
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerRight: () => (
@@ -69,7 +96,7 @@ export default function HomeScreen({ navigation }) {
               size={40}
               rounded
               icon={{ name: "person" }}
-              containerStyle={{ backgroundColor: "#00a7f7" }}
+              containerStyle={{ backgroundColor: "#00c1d4", marginBottom: 5 }}
             />
           </Pressable>
         ),
@@ -84,14 +111,18 @@ export default function HomeScreen({ navigation }) {
           style={(styles.logo, { height: height * 0.3 })}
         />
         <Text style={styles.title}>Welcome!</Text>
-        <Text style={styles.title}>
-          {" "}
-          Press "Start new Quiz" to play as a guest!{" "}
+        <Text style={styles.subTitle}>
+          Press "Start new Quiz" to play as a guest!
         </Text>
         <View style={styles.questionContainer}>
-          <CustomButton onPress={QuizForm} text="Start new Quiz!" />
-          <CustomButton onPress={SignUp} text="Sign up!" />
-          <CustomButton onPress={Login} text="Sign in!" />
+          <CustomButton onPress={Quiz} text="Quickstart!" bgcolor={"#00c1d4"} />
+          <CustomButton
+            onPress={QuizForm}
+            text="Start new Quiz!"
+            bgcolor={"#ffc201"}
+          />
+          <CustomButton onPress={SignUp} text="Sign up!" bgcolor={"#1e3b52"} />
+          <CustomButton onPress={Login} text="Sign in!" bgcolor={"#1e3b52"} />
         </View>
       </View>
     );
@@ -104,7 +135,7 @@ export default function HomeScreen({ navigation }) {
               size={40}
               rounded
               icon={{ name: "person" }}
-              containerStyle={{ backgroundColor: "#00a7f7" }}
+              containerStyle={{ backgroundColor: "#00c1d4" }}
             />
           </Pressable>
         ),
@@ -127,7 +158,12 @@ export default function HomeScreen({ navigation }) {
         />
         <Text style={styles.title}>Welcome {username}!</Text>
         <View style={styles.questionContainer}>
-          <CustomButton onPress={QuizForm} text="Start new Quiz!" />
+          <CustomButton onPress={Quiz} text="Quickstart!" bgcolor={"#00c1d4"} />
+          <CustomButton
+            onPress={QuizForm}
+            text="Start new Quiz!"
+            bgcolor={"#ffc201"}
+          />
         </View>
       </View>
     );
@@ -145,6 +181,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     margin: 10,
+    textAlign: "center",
+  },
+  subTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#051C60",
     textAlign: "center",
   },
   questionContainer: {

@@ -6,7 +6,7 @@ import SomeButtons from "../components/somebuttons";
 export default function SignupConfirmScreen({ navigation }) {
   const [authcode, setauthcode] = useState("");
 
-  const onConfirmPressed = () => console.warn("HOMO");
+  const onConfirmPressed = () => console.warn("Warning");
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>

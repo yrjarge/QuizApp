@@ -46,7 +46,7 @@ export default function CongratzScreen({ navigation }) {
             size={40}
             rounded
             icon={{ name: "person" }}
-            containerStyle={{ backgroundColor: "#00a7f7" }}
+            containerStyle={{ backgroundColor: "#00c1d4", marginBottom: 5 }}
           />
         </Pressable>
       ),
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     margin: 30,
     color: "white",
+    paddingTop: 100,
   },
   image: {
     height: "100%",

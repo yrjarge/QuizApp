@@ -12,7 +12,6 @@ import QuestionContext from "../context/Questions/questionContext";
 import SessionContext from "../context/SessionToken/sessionContext";
 import ScoreContext from "../context/Score/scoreContext";
 
-const question_mark = require("../../assets/images/floating_questionmark.jpg");
 const chalkboard_question = require("../../assets/images/chalkboard_question.jpg");
 
 const styles = StyleSheet.create({
@@ -82,7 +81,7 @@ export default function QuizForm({ navigation }) {
             size={40}
             rounded
             icon={{ name: "person" }}
-            containerStyle={{ backgroundColor: "#00a7f7" }}
+            containerStyle={{ backgroundColor: "#00c1d4", marginBottom: 5 }}
           />
         </Pressable>
       ),
