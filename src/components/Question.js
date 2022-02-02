@@ -50,7 +50,7 @@ const Question = ({ question, setIndex, index }) => {
         imageStyle={styles.image_style}
       >
         <View style={styles.postHeader}>
-          <Text style={styles.textQuestion}>
+          <Text style={styles.textQuestion} adjustsFontSizeToFit>
             {he.decode(question.question)}
           </Text>
         </View>
