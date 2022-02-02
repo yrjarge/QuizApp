@@ -61,9 +61,9 @@ export default function Profile({ navigation }) {
       </View>
       <View style={styles.container}>
         <Text style={styles.text}>
-          Correct Ratio:{" "}
+          Quiz accuracy:{" "}
           {score / max_score != NaN
-            ? Number(score / max_score).toFixed(2)
+            ? Number(score / max_score).toFixed(2) * 100 + "%"
             : "No history"}
         </Text>
       </View>
