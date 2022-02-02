@@ -48,7 +48,7 @@ export default function Quiz({ navigation }) {
 
   if (index < results.length) {
     return (
-      <View>
+      <View style={styles.root}>
         <Text style={styles.sectionTitle}>
           Question {index + 1} / {results.length}
         </Text>
@@ -62,11 +62,9 @@ export default function Quiz({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  post: {
-    height: "90%",
-    backgroundColor: "#E2F0F0",
-    justifyContent: "center", //Centered vertically
-    alignItems: "center", // Centered horizontally
+  root: {
+    height: "100%",
+    width: "100%",
   },
   sectionTitle: {
     fontSize: 15,

@@ -6,7 +6,6 @@ import he from "he";
 import ScoreContext from "../context/Score/scoreContext";
 
 import Answers from "./Answers";
-import MyText from "./MyText";
 
 const chalkboard = require("../../assets/images/chalkboard.jpg");
 
