@@ -15,7 +15,7 @@ const SessionState = (props) => {
 
   // Set SessionToken
   const setToken = async () => {
-    res = await fetchSessionToken();
+    let res = await fetchSessionToken();
     switch (res.response_code) {
       case 0:
         dispatch({
