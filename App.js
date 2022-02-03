@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, LogBox } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { Avatar } from "react-native-elements";
@@ -28,8 +28,8 @@ import ScoreState from "./src/context/Score/ScoreState";
 //firebase
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-//Components
-import Button from "./src/components/Button";
+
+LogBox.ignoreAllLogs();
 
 const style = StyleSheet.create({
   headerIcon: {
